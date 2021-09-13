@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema(
   {
       name:{
-          type: String
+          type: String,
+           required:true
       },
       price:{
-          type : Number
+          type : Number,
+           required:true
       }
   });
 

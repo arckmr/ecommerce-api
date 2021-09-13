@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const { rsort } = require("semver");
+require("dotenv").config();
+
 
 router.post ('/auth/register',async (req,res)=>{   //recieves username, password, name,type
    
@@ -24,12 +28,29 @@ router.get ('/auth/login',async (req,res)=>{       //recieves username and passw
 	 let result = 0
 	 result = await User.findOne({username:req.body.username,password:req.body.password})
 	 console.log(result);
-	 if( result){
-		 res.send("success");
-	 }
-	 else{
-		 res.send("failure");
-	 }
-})
+	 if(result){
+	const accesstoken= jwt.sign(result.username , process.env.ACCESS_TOKEN_SECRET);
+	res.send(accesstoken)}
+	else
+	res.status(401)
+});
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    console.log(err)
+    if (err) return res.sendStatus(403)
+    req.body.username = user
+    next()
+  })
+};
+router.get('/auth/verify', authenticateToken, (req, res) => {
+   res.json(req.body.username)
+});
+
+
 
 module.exports = router;

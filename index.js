@@ -1,6 +1,7 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
 require("./helper/mongo_init");
+require("dotenv").config();
 const app = express();
 const userResgister = require ('./routes/authRoutes');
 const seller = require ('./routes/sellerRoutes');

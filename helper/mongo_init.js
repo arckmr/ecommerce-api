@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 mongoose
-  .connect('mongodb://localhost:27017', {
-    dbName: "Apna_Buisness",
+  .connect(process.env.MONGODB_URI, {
+    dbName:  process.env.DB_NAME,
     useUnifiedTopology: true,
     useNewUrlParser: true,
     

@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 const CatalogSchema = new mongoose.Schema(
   {
       user_id :{
-          type : String
+          type : String,
+           required:true
       },
       products:[{
           product_id: {
-              type:String
+            type:String,
+            
           }
       }]
 
