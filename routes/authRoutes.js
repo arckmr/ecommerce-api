@@ -29,7 +29,7 @@ router.get ('/auth/login',async (req,res)=>{       //recieves username and passw
 	 result = await User.findOne({username:req.body.username,password:req.body.password})
 	 console.log(result);
 	 if(result){
-	const accesstoken= jwt.sign(result.username , process.env.ACCESS_TOKEN_SECRET);
+	const accesstoken= jwt.sign(result, process.env.ACCESS_TOKEN_SECRET);
 	res.send(accesstoken)}
 	else
 	res.status(401)
